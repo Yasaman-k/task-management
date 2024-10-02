@@ -1,19 +1,21 @@
 const BASE_URL = 'http://46.100.46.149:8069';
 
 // Function to get all tasks
-export const getAllTasks = async () => {
+export const getAllTasks = async (): Promise<TaskResult> => {
   const response = await fetch(`${BASE_URL}/api/tasks`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   });
+  console.log(response);
 
   if (!response.ok) {
-    throw new Error('Failed to get all tasks');
+    throw new Error('Failed to fetch tasks');
   }
 
-  return await response.json();
+  const tasks: TaskResult = await response.json();
+  return tasks;
 };
 
 // Function to create a new task

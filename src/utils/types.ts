@@ -4,3 +4,8 @@ type TaskType = {
   description: string;
   completed: boolean;
 };
+
+interface TaskResult {
+  count: number;
+  results: TaskType[];
+}
