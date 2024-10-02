@@ -14,10 +14,11 @@ const AddTaskForm = () => {
   const onSaveTask = () => {
     if (title && description) {
       dispatch(
-        taskAdded({
+        taskAdded(
           title,
-          description
-        })
+          description,
+
+        )
       )
 
       setTitle('')
