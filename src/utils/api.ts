@@ -1,8 +1,30 @@
-const BASE_URL = 'http://46.100.46.149:8069/api/tasks/';
+const BASE_URL = 'http://46.100.46.149:8069';
 
-// Function to add a new task
-export const addTask = async (taskData) => {
-  const response = await fetch(`${BASE_URL}`, {
+type TaskType = {
+  id: number;
+  title: string;
+  description: string;
+  completed: boolean;
+};
+// Function to get all tasks
+export const getAllTasks = async () => {
+  const response = await fetch(`${BASE_URL}/api/tasks`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to get all tasks');
+  }
+
+  return await response.json();
+};
+
+// Function to create a new task
+export const createTask = async (taskData: TaskType) => {
+  const response = await fetch(`${BASE_URL}/api/tasks`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -18,7 +40,7 @@ export const addTask = async (taskData) => {
 };
 
 // Function to delete a task
-export const deleteTask = async (taskId) => {
+export const deleteTask = async (taskId: number) => {
   const response = await fetch(`${BASE_URL}/${taskId}`, {
     method: 'DELETE',
   });
@@ -30,9 +52,9 @@ export const deleteTask = async (taskId) => {
   return await response.json();
 };
 
-// Function to edit a task
-export const editTask = async (taskId, taskData) => {
-  const response = await fetch(`${BASE_URL}/${taskId}`, {
+// Function to update a task
+export const updateTask = async (taskId: number, taskData: TaskType) => {
+  const response = await fetch(`${BASE_URL}/api/tasks/${taskId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
