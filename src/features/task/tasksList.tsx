@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { getAllTasks } from '../../utils/api'; // Adjust the path
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTasks, selectAllTasks } from './taskSlice';
-
 
 const TasksList: React.FC = () => {
 
     const tasks = useSelector(selectAllTasks)
     const dispatch = useDispatch<any>();
 
-
     useEffect(() => {
         dispatch(fetchTasks());
     }, [dispatch]);
 
-    const renderedTasks = tasks?.results.map((task: TaskType) => (
+    const renderedTasks = tasks?.tasks.map((task: TaskType) => (
         <li key={task.id} className='flex justify-between items-center border p-2 '>
             <div className=''>
                 <p> {task.completed ? 'Completed' : 'Incomplete'}</p>
@@ -31,9 +28,6 @@ const TasksList: React.FC = () => {
 
         </li>
     ))
-
-
-
 
     return (
         <section>

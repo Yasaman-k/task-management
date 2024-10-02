@@ -10,7 +10,7 @@ function App() {
       </header>
 
       <main className='m-auto flex flex-col space-y-4 w-full  md:w-1/2'>
-        <AddTaskForm />
+        {/* <AddTaskForm /> */}
 
         <div>
           <TaskList />
