@@ -9,3 +9,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+input,
+textarea {
+  @apply border-4 border-slate-500 rounded-lg p-2 hover:bg-slate-200;
+}
+
+button {
+  @apply bg-slate-500 rounded-lg p-2 text-white hover:bg-slate-400;
+}

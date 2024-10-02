@@ -8,7 +8,6 @@ export const getAllTasks = async (): Promise<TaskResult> => {
       'Content-Type': 'application/json',
     },
   });
-  console.log(response);
 
   if (!response.ok) {
     throw new Error('Failed to fetch tasks');
