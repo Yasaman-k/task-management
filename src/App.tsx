@@ -1,7 +1,7 @@
 import Button from './components/atoms/button';
 import Input from './components/atoms/input';
 import Textarea from './components/atoms/textarea';
-import TaskList from './components/taskList';
+import TaskList from './components/tasksList';
 import Counter from './features/counter/Counter';
 import { staticText } from './staticText';
 

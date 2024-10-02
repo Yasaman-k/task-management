@@ -1,10 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { getAllTasks } from '../utils/api'; // Adjust the path
+import { useSelector } from 'react-redux';
+import { selectAllTasks } from '../features/task/taskSlice';
 
-const TaskList: React.FC = () => {
+const TasksList: React.FC = () => {
     const [tasks, setTasks] = useState<TaskResult>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const tasks1 = useSelector(selectAllTasks)
+
+    console.log(tasks1);
+
+
+
+    const renderedTasks = tasks?.results.map((task: TaskType) => (
+        <li key={task.id} className='flex justify-between border p-2 '>
+            <div>
+                <p> {task.title} </p>
+                <p>{task.description}</p>
+            </div>
+            <p> {task.completed ? 'Completed' : 'Incomplete'}</p>
+        </li>
+    ))
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -26,22 +43,16 @@ const TaskList: React.FC = () => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
+
+
     return (
-        <div>
-            <h1>Task List</h1>
+        <section>
+            <h3>Task List</h3>
             <ul className='space-y-3'>
-                {tasks?.results.map((task) => (
-                    <li key={task.id} className='flex justify-between border p-2 '>
-                        <div>
-                            <p> {task.title} </p>
-                            <p>{task.description}</p>
-                        </div>
-                        <p> {task.completed ? 'Completed' : 'Incomplete'}</p>
-                    </li>
-                ))}
+                {renderedTasks}
             </ul>
-        </div>
+        </section>
     );
 };
 
-export default TaskList;
+export default TasksList;
