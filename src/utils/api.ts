@@ -1,11 +1,5 @@
 const BASE_URL = 'http://46.100.46.149:8069';
 
-type TaskType = {
-  id: number;
-  title: string;
-  description: string;
-  completed: boolean;
-};
 // Function to get all tasks
 export const getAllTasks = async () => {
   const response = await fetch(`${BASE_URL}/api/tasks`, {

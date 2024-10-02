@@ -1,14 +1,19 @@
-import Button from './components/button';
-import Input from './components/input';
-import Textarea from './components/textarea';
+import Button from './components/atoms/button';
+import Input from './components/atoms/input';
+import Textarea from './components/atoms/textarea';
 import Counter from './features/counter/Counter';
 import { staticText } from './staticText';
+import { getAllTasks } from './utils/api';
 
 function App() {
 
   const handleSubmit = () => {
 
   }
+
+  const tasks = await getAllTasks()
+  console.log(tasks);
+
   return (
     <div className="w-full p-4 space-y-4">
       <header className='bg-slate-800 flex justify-center h-32'>
@@ -26,6 +31,18 @@ function App() {
               <Button name={staticText.AddTask} />
             </div>
           </form>
+        </div>
+
+        <div>
+          {/* {tasks.map((task) => {
+            return <>
+              <div>
+                <p>{tasks.type}</p>
+                <p>{ }</p>
+              </div>
+            </>
+          })} */}
+
         </div>
       </main>
     </div>
