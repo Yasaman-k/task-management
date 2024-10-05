@@ -9,7 +9,7 @@ const Home = () => {
                 <h1 className="text-3xl font-bold text-cen self-center text-white">{staticText.title}</h1>
             </header>
 
-            <main>
+            <main className='w-full container  mx-auto'>
                 <AddTaskForm />
                 <TaskList />
             </main>

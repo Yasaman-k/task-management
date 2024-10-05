@@ -18,7 +18,7 @@ export const getAllTasks = async (): Promise<TaskResult> => {
 };
 
 // Function to create a new task
-export const createTask = async (taskData: TaskType) => {
+export const createTask = async (taskData: Omit<TaskType, 'id'>) => {
   const response = await fetch(`${BASE_URL}/api/tasks/`, {
     method: 'POST',
     headers: {
@@ -37,7 +37,7 @@ export const createTask = async (taskData: TaskType) => {
 
 // Function to delete a task
 export const deleteTask = async (taskId: number) => {
-  const response = await fetch(`${BASE_URL}/${taskId}/`, {
+  const response = await fetch(`${BASE_URL}/${taskId}`, {
     method: 'DELETE',
   });
 

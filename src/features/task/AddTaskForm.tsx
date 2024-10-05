@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { staticText } from "../../staticText";
-import { addNewTask, taskAdded } from "./tasksSlice";
+import { addNewTask } from "./tasksSlice";
 import { useDispatch } from "react-redux";
 
 const AddTaskForm = () => {
@@ -27,7 +27,6 @@ const AddTaskForm = () => {
     }
   }
 
-
   return (
     <div className=''>
       <h2>Add new Task here</h2>
@@ -43,7 +42,3 @@ const AddTaskForm = () => {
 }
 
 export default AddTaskForm
-
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}

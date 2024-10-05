@@ -1,10 +1,16 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { createTask, getAllTasks } from '../../utils/api';
+import { createTask, deleteTask, getAllTasks, updateTask } from '../../utils/api';
 
 // Define the initial state correctly
 interface TaskState {
   tasks: TaskType[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+}
+
+// Define the payload type
+interface EditTaskPayload {
+  id: number;
+  task: TaskType;
 }
 
 const initialState: TaskState = {
@@ -27,6 +33,24 @@ export const addNewTask = createAsyncThunk(
   },
 );
 
+// Action to delete a  task
+export const apiDeleteTask = createAsyncThunk(
+  'tasks/apiDeleteTask', // Action type
+  async (id: number) => {
+    const response = await deleteTask(id); // Assuming addTask is your API function to create a task
+    return response; // The response returned by the API
+  },
+);
+
+// Action to edit a task
+export const apiEditTask = createAsyncThunk(
+  'tasks/apiEditTask', // Action type
+  async ({ id, task }: EditTaskPayload) => {
+    const response = await updateTask(id, task); // Assuming addTask is your API function to create a task
+    return response; // The response returned by the API
+  },
+);
+
 export const taskSlice = createSlice({
   name: 'tasks',
   initialState,
@@ -35,12 +59,13 @@ export const taskSlice = createSlice({
       reducer(state, action: PayloadAction<TaskType>) {
         state.tasks.push(action.payload);
       },
-      prepare(title: string, description: string, completed: boolean) {
+      prepare(title: string, description: string, completed: boolean, id: number) {
         return {
           payload: {
             title,
             description,
             completed,
+            id,
           },
         };
       },

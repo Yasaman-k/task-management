@@ -6,16 +6,17 @@ import { store } from './app/store';
 import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/home';
+import EditTaskForm from './features/task/EditTaskForm';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
   },
-  // {
-  //   path: "/create-task",
-  //   element: <createTask />,
-  // },
+  {
+    path: "/task/:id",
+    element: <EditTaskForm />,
+  },
 ]);
 
 const rootElement = document.getElementById('root')
