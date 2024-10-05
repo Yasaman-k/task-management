@@ -4,26 +4,27 @@ import { taskAdded } from "./tasksSlice";
 import { useDispatch } from "react-redux";
 
 const AddTaskForm = () => {
-  const [title, setTitle] = useState('')
+  const [formData, setFormData] = useState<TaskType | any>();
   const [description, setDesc] = useState('')
   const dispatch = useDispatch()
 
-  const onTitleChanged = (e: any) => setTitle(e.target.value)
-  const onDescChanged = (e: any) => setDesc(e.target.value)
+  const handleChange = (value: any, name: string) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    if (title && description) {
+    if (formData.title && formData.description) {
+      const body = Object.assign(formData, { completed: false })
       dispatch(
         taskAdded(
-          title,
-          description,
-
+          body.title, body.description, body.completed
         )
       )
-
-      setTitle('')
-      setDesc('')
     }
   }
 
@@ -33,16 +34,12 @@ const AddTaskForm = () => {
       <h2>Add new Task here</h2>
       <form onSubmit={handleSubmit}>
         <div className='flex flex-col space-y-3'>
-
-          <input type={'text'} name={title} onChange={onTitleChanged} />
-          <textarea name={'description'} value={description} onChange={onDescChanged} >
-          </textarea>
-
+          <input required autoComplete="off" type={'text'} name={'title'} onChange={(e) => handleChange(e.target.value, 'title')} />
+          <textarea required name={'description'} onChange={(e) => handleChange(e.target.value, 'description')} />
           <button type="submit">{staticText.AddTask} </button>
         </div>
       </form>
     </div>
-
   )
 }
 

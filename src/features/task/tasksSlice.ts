@@ -35,14 +35,12 @@ export const taskSlice = createSlice({
       reducer(state, action: PayloadAction<TaskType>) {
         state.tasks.push(action.payload);
       },
-      prepare(title: string, description: string) {
-        const id = new Date().getTime(); // Generate an ID for the new task
+      prepare(title: string, description: string, completed: boolean) {
         return {
           payload: {
-            id,
             title,
             description,
-            completed: false,
+            completed,
           },
         };
       },
@@ -64,6 +62,7 @@ export const taskSlice = createSlice({
   },
 });
 
+// get all tasks
 export const selectAllTasks = (state: any) => state.tasks;
 
 export const { taskAdded } = taskSlice.actions;

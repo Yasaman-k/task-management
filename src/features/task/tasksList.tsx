@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTasks, selectAllTasks } from './tasksSlice';
+import { AppDispatch } from '../../app/store'; // Import the AppDispatch type
 
 const TasksList: React.FC = () => {
     const tasks = useSelector(selectAllTasks)
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         dispatch(fetchTasks());
