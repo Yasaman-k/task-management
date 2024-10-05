@@ -11,19 +11,19 @@ const TasksList: React.FC = () => {
     }, [dispatch]);
 
     const renderedTasks = tasks?.tasks.map((task: TaskType) => (
-        <li key={task.id} className='space-x-4 flex justify-between border p-2 w-full md:w-1/2 lg:w-1/3 m-auto '>
-            <div className='flex space-x-4 items-center '>
-                <input type='checkbox' defaultChecked={task.completed} />
+        <li key={task.id} className='flex  border p-2 '>
+            <div className='flex  space-x-4 items-center w-[calc(100%-9rem)] '>
+                <input className='w-10' type='checkbox' defaultChecked={task.completed} />
 
-                <div >
-                    <p> {task.title} </p>
-                    <p className=''> {task.description}</p>
+                <div className='w-[calc(100%-10rem)]' >
+                    <p > {task.title} </p>
+                    <p className='break-words'> {task.description}</p>
                 </div>
 
             </div>
-            <div className='space-x-2 w-34 grow '>
-                <button className='bg-yellow-700 w-16'>edit</button>
-                <button className='bg-red-700 w-16'>delete</button>
+            <div className='flex justify-between self-center w-[9rem]'>
+                <button className='bg-yellow-700 w-[4rem]'>edit</button>
+                <button className='bg-red-700 w-[4rem]'>delete</button>
             </div>
         </li>
     ))
@@ -31,7 +31,7 @@ const TasksList: React.FC = () => {
     return (
         <section className=''>
             <h3 className='text-center py-3 font-medium'>Task List</h3>
-            <ul className=' space-y-3' >
+            <ul className='space-y-3 w-full container mx-auto' >
                 {renderedTasks && renderedTasks.length > 0 ? renderedTasks : <p>No tasks found</p>}
             </ul>
         </section>
