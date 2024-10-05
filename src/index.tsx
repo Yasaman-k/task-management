@@ -1,11 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from './pages/home';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+]);
 
 const rootElement = document.getElementById('root')
 
@@ -14,16 +21,13 @@ if (rootElement) {
   root.render(
     <React.StrictMode>
       <Provider store={store}>
-        <BrowserRouter>
-          <App />
-          /</BrowserRouter>
+        <RouterProvider router={router} />
       </Provider>
     </React.StrictMode>,
   );
 }
 else {
   console.error('Root elemet not found!');
-
 }
 
 

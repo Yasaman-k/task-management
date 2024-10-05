@@ -4,18 +4,14 @@ import AddTaskForm from '../features/task/AddTaskForm';
 
 const Home = () => {
     return (
-        <div className="w-full p-4 space-y-4">
-            <header className='bg-slate-800 flex justify-center h-32'>
-                <h1 className="text-3xl font-bold self-center text-white">{staticText.title}</h1>
+        <div className=" p-4 space-y-4 ">
+            <header className='bg-slate-800 flex justify-center h-32 p-2'>
+                <h1 className="text-3xl font-bold text-cen self-center text-white">{staticText.title}</h1>
             </header>
 
-            <main className='m-auto flex flex-col space-y-4 w-full  md:w-1/2'>
+            <main>
                 {/* <AddTaskForm /> */}
-
-                <div>
-                    <TaskList />
-
-                </div>
+                <TaskList />
             </main>
         </div>
     )
