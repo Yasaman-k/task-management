@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { apiDeleteTask, fetchTasks, selectAllTasks } from './tasksSlice';
+import { apiDeleteTask, fetchTasks, selectAllTasks, stateEditTask } from './tasksSlice';
 import { AppDispatch } from '../../app/store'; // Import the AppDispatch type
 import { useNavigate } from 'react-router-dom';
 
@@ -16,17 +16,29 @@ const TasksList: React.FC = () => {
     const deleteTask = (task: TaskType) => {
         try {
             dispatch(apiDeleteTask(task))
-            navigate('/')
-            // upadate page
         } catch (error) {
             console.error('Failed to delete the post', error)
         }
     }
 
+    const editCheckedTask = (e: any, task: TaskType) => {
+        const body = Object.assign({ completed: e.target.checked })
+
+        dispatch(
+            stateEditTask(
+                {
+                    id: task.id,
+                    task: body
+                }
+            )
+        )
+    }
+
+
     const renderedTasks = tasks?.tasks.map((task: TaskType) => (
         <li key={task.id} className='flex flex-col-reverse md:flex-row border p-2 '>
             <div className='flex  space-x-4 items-center w-full md:w-[calc(100%-9rem)] '>
-                <input className='w-10' type='checkbox' defaultChecked={task.completed} />
+                <input className='w-10' type='checkbox' onChange={(e) => editCheckedTask(e, task)} defaultChecked={task.completed} />
 
                 <div className='w-full md:w-[calc(100%-10rem)] ' style={{ overflowWrap: 'anywhere' }} >
                     <p style={{ overflowWrap: 'anywhere' }} > {task.title} </p>

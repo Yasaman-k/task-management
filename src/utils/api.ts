@@ -61,7 +61,7 @@ export const updateTask = async (taskId: number, taskData: TaskType) => {
     throw new Error('Failed to edit task');
   }
 
-  return await response.json();
+  return response;
 };
 
 // Function to get a task by id

@@ -15,7 +15,7 @@ const AddTaskForm = () => {
   };
 
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault()
     if (formData.title && formData.description) {
       const body = Object.assign(formData, { completed: false })
@@ -25,6 +25,7 @@ const AddTaskForm = () => {
         )
       )
     }
+    e.currentTarget.reset();
   }
 
   return (

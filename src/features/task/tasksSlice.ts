@@ -55,6 +55,9 @@ export const stateEditTask = createAsyncThunk(
   'tasks/stateEditTask', // Action type
   async ({ id, task }: EditTaskPayload) => {
     const response = await updateTask(id, task); // Assuming addTask is your API function to create a task
+    if (response.ok) {
+      alert('task successfully updated');
+    }
     return response; // The response returned by the API
   },
 );
@@ -105,12 +108,12 @@ export const taskSlice = createSlice({
       .addCase(addNewTask.fulfilled, (state, action: PayloadAction<TaskType>) => {
         state.tasks.push(action.payload);
       })
-      .addCase(stateEditTask.fulfilled, (state, action: PayloadAction<TaskType>) => {
-        const index = state.tasks.findIndex((task) => task.id === action.payload.id);
-        if (index !== -1) {
-          state.tasks[index] = { ...state.tasks[index], ...action.payload };
-        }
-      })
+      // .addCase(stateEditTask.fulfilled, (state, action: PayloadAction<TaskType>) => {
+      //   const index = state.tasks.findIndex((task) => task.id === action.payload.id);
+      //   if (index !== -1) {
+      //     state.tasks[index] = { ...state.tasks[index], ...action.payload };
+      //   }
+      // })
       .addCase(apiDeleteTask.fulfilled, (state, action: PayloadAction<any>) => {
         state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
       });
