@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { apiDeleteTask, apiEditTask, fetchTasks, selectAllTasks } from './tasksSlice';
+import { apiDeleteTask, fetchTasks, selectAllTasks } from './tasksSlice';
 import { AppDispatch } from '../../app/store'; // Import the AppDispatch type
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +15,8 @@ const TasksList: React.FC = () => {
 
     const deleteTask = (id: number) => {
         dispatch(apiDeleteTask(id));
+        navigate('/')
+        // upadate page
     }
 
     const renderedTasks = tasks?.tasks.map((task: TaskType) => (
@@ -23,8 +25,8 @@ const TasksList: React.FC = () => {
                 <input className='w-10' type='checkbox' defaultChecked={task.completed} />
 
                 <div className='w-full md:w-[calc(100%-10rem)] ' style={{ overflowWrap: 'anywhere' }} >
-                    <p > {task.title} </p>
-                    <p className='break-words'> {task.description}</p>
+                    <p style={{ overflowWrap: 'anywhere' }} > {task.title} </p>
+                    <p style={{ overflowWrap: 'anywhere' }} > {task.description}</p>
                 </div>
 
             </div>

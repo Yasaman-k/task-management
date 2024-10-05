@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { createTask, deleteTask, getAllTasks, updateTask } from '../../utils/api';
+import { createTask, deleteTask, fetchTaskById, getAllTasks, updateTask } from '../../utils/api';
 
 // Define the initial state correctly
 interface TaskState {
   tasks: TaskType[];
+  taskById: TaskType;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
 
@@ -15,6 +16,12 @@ interface EditTaskPayload {
 
 const initialState: TaskState = {
   tasks: [],
+  taskById: {
+    id: 0,
+    title: '',
+    description: '',
+    completed: false,
+  },
   status: 'idle',
 };
 
@@ -43,13 +50,19 @@ export const apiDeleteTask = createAsyncThunk(
 );
 
 // Action to edit a task
-export const apiEditTask = createAsyncThunk(
-  'tasks/apiEditTask', // Action type
+export const stateEditTask = createAsyncThunk(
+  'tasks/stateEditTask', // Action type
   async ({ id, task }: EditTaskPayload) => {
     const response = await updateTask(id, task); // Assuming addTask is your API function to create a task
     return response; // The response returned by the API
   },
 );
+
+// to get task by id
+export const stateGetTaskById = createAsyncThunk('tasks/stateGetTaskById', async (id: number) => {
+  const task = await fetchTaskById(id); // Make sure this function returns the expected shape
+  return task; // Adjust this based on the API response
+});
 
 export const taskSlice = createSlice({
   name: 'tasks',
@@ -84,14 +97,29 @@ export const taskSlice = createSlice({
         state.status = 'failed';
         console.error('failed to fetch tasks', action.error.message);
       })
+      .addCase(stateGetTaskById.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.taskById = action.payload;
+      })
       .addCase(addNewTask.fulfilled, (state, action: PayloadAction<TaskType>) => {
         state.tasks.push(action.payload);
+      })
+      .addCase(stateEditTask.fulfilled, (state, action: PayloadAction<TaskType>) => {
+        const index = state.tasks.findIndex((task) => task.id === action.payload.id);
+        if (index !== -1) {
+          state.tasks[index] = { ...state.tasks[index], ...action.payload };
+        }
+      })
+      .addCase(apiDeleteTask.fulfilled, (state, action: PayloadAction<number>) => {
+        state.tasks = state.tasks.filter((task) => task.id !== action.payload);
       });
   },
 });
 
 // get all tasks
 export const selectAllTasks = (state: any) => state.tasks;
+
+export const selectTaskById = (state: any) => state.tasks.taskById;
 
 export const { taskAdded } = taskSlice.actions;
 

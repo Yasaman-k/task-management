@@ -23,3 +23,9 @@ textarea {
 button {
   @apply bg-slate-500 rounded-lg p-2 text-white hover:bg-slate-400;
 }
+
+footer {
+  bottom: 0;
+  position: absolute;
+  padding: 20px 0;
+}

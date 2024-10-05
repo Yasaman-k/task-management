@@ -37,7 +37,7 @@ export const createTask = async (taskData: Omit<TaskType, 'id'>) => {
 
 // Function to delete a task
 export const deleteTask = async (taskId: number) => {
-  const response = await fetch(`${BASE_URL}/${taskId}`, {
+  const response = await fetch(`${BASE_URL}/api/task/${taskId}/`, {
     method: 'DELETE',
   });
 
@@ -50,8 +50,10 @@ export const deleteTask = async (taskId: number) => {
 
 // Function to update a task
 export const updateTask = async (taskId: number, taskData: TaskType) => {
+  //  console.log(taskId);
+
   const response = await fetch(`${BASE_URL}/api/tasks/${taskId}/`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -63,4 +65,21 @@ export const updateTask = async (taskId: number, taskData: TaskType) => {
   }
 
   return await response.json();
+};
+
+// Function to get a task by id
+export const fetchTaskById = async (taskId: number) => {
+  const response = await fetch(`${BASE_URL}/api/tasks/${taskId}/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to get task by id');
+  }
+
+  const task = await response.json();
+  return task;
 };
