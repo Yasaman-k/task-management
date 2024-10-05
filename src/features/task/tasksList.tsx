@@ -13,10 +13,14 @@ const TasksList: React.FC = () => {
         dispatch(fetchTasks());
     }, [dispatch]);
 
-    const deleteTask = (id: number) => {
-        dispatch(apiDeleteTask(id));
-        navigate('/')
-        // upadate page
+    const deleteTask = (task: TaskType) => {
+        try {
+            dispatch(apiDeleteTask(task))
+            navigate('/')
+            // upadate page
+        } catch (error) {
+            console.error('Failed to delete the post', error)
+        }
     }
 
     const renderedTasks = tasks?.tasks.map((task: TaskType) => (
@@ -32,7 +36,7 @@ const TasksList: React.FC = () => {
             </div>
             <div className='flex justify-between self-center w-[9rem]'>
                 <button className='bg-yellow-700 w-[4rem]' onClick={() => navigate(`/task/${task.id}`)} >edit</button>
-                <button className='bg-red-700 w-[4rem]' onClick={(e) => deleteTask(task.id)}>delete</button>
+                <button className='bg-red-700 w-[4rem]' onClick={(e) => deleteTask(task)}>delete</button>
             </div>
         </li>
     ))

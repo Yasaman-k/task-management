@@ -26,7 +26,6 @@ export const createTask = async (taskData: Omit<TaskType, 'id'>) => {
     },
     body: JSON.stringify(taskData),
   });
-  console.log(response);
 
   if (!response.ok) {
     throw new Error('Failed to add task');
@@ -45,13 +44,11 @@ export const deleteTask = async (taskId: number) => {
     throw new Error('Failed to delete task');
   }
 
-  return await response.json();
+  return response;
 };
 
 // Function to update a task
 export const updateTask = async (taskId: number, taskData: TaskType) => {
-  //  console.log(taskId);
-
   const response = await fetch(`${BASE_URL}/api/tasks/${taskId}/`, {
     method: 'PATCH',
     headers: {

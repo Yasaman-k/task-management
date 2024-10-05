@@ -43,9 +43,10 @@ export const addNewTask = createAsyncThunk(
 // Action to delete a  task
 export const apiDeleteTask = createAsyncThunk(
   'tasks/apiDeleteTask', // Action type
-  async (id: number) => {
+  async (initialTask: TaskType) => {
+    const { id } = initialTask;
     const response = await deleteTask(id); // Assuming addTask is your API function to create a task
-    return response; // The response returned by the API
+    if (response?.ok) return initialTask;
   },
 );
 
@@ -110,8 +111,8 @@ export const taskSlice = createSlice({
           state.tasks[index] = { ...state.tasks[index], ...action.payload };
         }
       })
-      .addCase(apiDeleteTask.fulfilled, (state, action: PayloadAction<number>) => {
-        state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+      .addCase(apiDeleteTask.fulfilled, (state, action: PayloadAction<any>) => {
+        state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
       });
   },
 });
