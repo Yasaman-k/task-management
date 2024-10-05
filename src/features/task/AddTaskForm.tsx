@@ -1,12 +1,11 @@
 import { FormEvent, useState } from "react";
 import { staticText } from "../../staticText";
-import { taskAdded } from "./tasksSlice";
+import { addNewTask, taskAdded } from "./tasksSlice";
 import { useDispatch } from "react-redux";
 
 const AddTaskForm = () => {
   const [formData, setFormData] = useState<TaskType | any>();
-  const [description, setDesc] = useState('')
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<any>()
 
   const handleChange = (value: any, name: string) => {
     setFormData({
@@ -21,8 +20,8 @@ const AddTaskForm = () => {
     if (formData.title && formData.description) {
       const body = Object.assign(formData, { completed: false })
       dispatch(
-        taskAdded(
-          body.title, body.description, body.completed
+        addNewTask(
+          body
         )
       )
     }
