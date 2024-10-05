@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTasks, selectAllTasks } from './taskSlice';
+import { fetchTasks, selectAllTasks } from './tasksSlice';
 
 const TasksList: React.FC = () => {
     const tasks = useSelector(selectAllTasks)

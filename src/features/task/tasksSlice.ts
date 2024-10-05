@@ -1,11 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { getAllTasks } from '../../utils/api';
-
-// Async thunk to fetch tasks
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-  const tasks = await getAllTasks();
-  return tasks.results;
-});
+import { createTask, getAllTasks } from '../../utils/api';
 
 // Define the initial state correctly
 interface TaskState {
@@ -17,6 +11,21 @@ const initialState: TaskState = {
   tasks: [],
   status: 'idle',
 };
+
+// Async thunk to fetch tasks
+export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
+  const tasks = await getAllTasks();
+  return tasks.results;
+});
+
+// Action to create a new task
+export const addNewTask = createAsyncThunk(
+  'tasks/addNewTask', // Action type
+  async (task: { title: string; description: string; completed: boolean }) => {
+    const response = await createTask(task); // Assuming addTask is your API function to create a task
+    return response; // The response returned by the API
+  },
+);
 
 export const taskSlice = createSlice({
   name: 'tasks',

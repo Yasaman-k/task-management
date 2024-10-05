@@ -10,7 +10,7 @@ const Home = () => {
             </header>
 
             <main>
-                {/* <AddTaskForm /> */}
+                <AddTaskForm />
                 <TaskList />
             </main>
         </div>

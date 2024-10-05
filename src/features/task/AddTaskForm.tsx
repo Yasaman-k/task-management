@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { staticText } from "../../staticText";
-import { taskAdded } from "./taskSlice";
+import { taskAdded } from "./tasksSlice";
 import { useDispatch } from "react-redux";
 
 const AddTaskForm = () => {
@@ -11,7 +11,8 @@ const AddTaskForm = () => {
   const onTitleChanged = (e: any) => setTitle(e.target.value)
   const onDescChanged = (e: any) => setDesc(e.target.value)
 
-  const onSaveTask = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
     if (title && description) {
       dispatch(
         taskAdded(
@@ -30,14 +31,14 @@ const AddTaskForm = () => {
   return (
     <div className=''>
       <h2>Add new Task here</h2>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <div className='flex flex-col space-y-3'>
 
           <input type={'text'} name={title} onChange={onTitleChanged} />
           <textarea name={'description'} value={description} onChange={onDescChanged} >
           </textarea>
 
-          <button type="button" onClick={onSaveTask}>{staticText.AddTask} </button>
+          <button type="submit">{staticText.AddTask} </button>
         </div>
       </form>
     </div>

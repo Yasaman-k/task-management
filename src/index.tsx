@@ -12,6 +12,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
   },
+  // {
+  //   path: "/create-task",
+  //   element: <createTask />,
+  // },
 ]);
 
 const rootElement = document.getElementById('root')
